@@ -40,7 +40,7 @@ function register_community_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array('slug' => 'community-post'),
+        'rewrite'            => array('slug' => 'guest-post'),
         'capability_type'    => 'post',
         'has_archive'        => true,
         'hierarchical'       => false,
