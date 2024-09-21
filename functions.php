@@ -176,3 +176,58 @@ function custom_breadcrumbs() {
     echo '</ul>';
 }
 
+// Register community post sidebar
+function community_post_sidebar() {
+    register_sidebar( array(
+        'name'          => 'Community Post Sidebar',
+        'id'            => 'sidebar-1',
+        'description'   => 'Sidebar for community post pages',
+        'before_widget' => '<div class="widget">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ) );
+}
+add_action( 'widgets_init', 'community_post_sidebar' );
+
+function custom_social_share_buttons() {
+    global $post;
+    $post_url = urlencode(get_permalink());
+    $post_title = urlencode(get_the_title());
+    $post_image = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
+    ?>
+    <div class="share-content">
+        <!-- Facebook -->
+        <a class="share-action share-icon share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $post_url; ?>" title="Facebook" target="_blank" rel="nofollow">
+            <i class="rbi rbi-facebook"></i>
+        </a>
+
+        <!-- Twitter -->
+        <a class="share-action share-icon share-twitter" href="https://twitter.com/intent/tweet?text=<?php echo $post_title; ?>&url=<?php echo $post_url; ?>" title="Twitter" target="_blank" rel="nofollow">
+            <i class="rbi rbi-twitter"></i>
+        </a>
+
+        <!-- Pinterest -->
+        <a class="share-action share-icon share-pinterest" href="https://pinterest.com/pin/create/button/?url=<?php echo $post_url; ?>&media=<?php echo $post_image; ?>&description=<?php echo $post_title; ?>" title="Pinterest" target="_blank" rel="nofollow">
+            <i class="rbi rbi-pinterest"></i>
+        </a>
+
+        <!-- LinkedIn -->
+        <a class="share-action share-icon share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $post_url; ?>&title=<?php echo $post_title; ?>" title="LinkedIn" target="_blank" rel="nofollow">
+            <i class="rbi rbi-linkedin"></i>
+        </a>
+
+        <!-- Tumblr -->
+        <a class="share-action share-icon share-tumblr" href="https://www.tumblr.com/share/link?url=<?php echo $post_url; ?>&name=<?php echo $post_title; ?>" title="Tumblr" target="_blank" rel="nofollow">
+            <i class="rbi rbi-tumblr"></i>
+        </a>
+
+        <!-- Reddit -->
+        <a class="share-action share-icon share-reddit" href="https://reddit.com/submit?url=<?php echo $post_url; ?>&title=<?php echo $post_title; ?>" title="Reddit" target="_blank" rel="nofollow">
+            <i class="rbi rbi-reddit"></i>
+        </a>
+    </div>
+    <?php
+}
+
+
