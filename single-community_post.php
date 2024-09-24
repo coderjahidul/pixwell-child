@@ -17,29 +17,17 @@
                                     </div>
                                 </aside>
                                 <aside class="p-cat-info is-relative single-cat-info">
-                                <?php
-                                    // Inside the loop for a community_post
-                                    if ( have_posts() ) : while ( have_posts() ) : the_post();
-
-                                        // Get the categories of the current community post
-                                        $categories = get_the_category(); // If using default 'category' taxonomy
-
-                                        if ( ! empty( $categories ) ) {
-                                            foreach ( $categories as $category ) {
-                                                $category_link = get_category_link( $category->term_id );
-                                                echo '<a class="cat-info-el cat-info-id-' . esc_attr( $category->term_id ) . '" href="' . esc_url( $category_link ) . '" rel="category">' . esc_html( $category->name ) . '</a>';
-                                            }
-                                        } else {
-                                            echo '<p>No categories assigned to this post.</p>';
+                                    <?php
+                                    $categories = wp_get_post_terms(get_the_ID(), 'community_category');
+                                    if (!empty($categories)) {
+                                        foreach ($categories as $category) {
+                                            $category_link = get_term_link($category);
+                                            echo '<a class="cat-info-el cat-info-id-' . esc_attr($category->term_id) . '" href="' . esc_url($category_link) . '" rel="category">' . esc_html($category->name) . '</a>';
                                         }
-
-                                    endwhile; endif;
-                                ?>
-
-
-                                    <!-- <a class="cat-info-el cat-info-id-1011"
-                                        href="http://localhost/homoper/category/home-design-and-decorating/room-designs/bedroom/"
-                                        rel="category">Bedroom</a> -->
+                                    } else {
+                                        echo '<p>No categories assigned to this post.</p>';
+                                    }
+                                    ?>
                                 </aside>
                                 <h1 itemprop="headline" class="single-title entry-title"><?php echo get_the_title(); ?></h1>
                                 <div class="single-entry-meta has-avatar small-size">
@@ -123,55 +111,23 @@
                                             // Display community single post content function
                                             the_content(); 
                                         ?>
-                                        <!-- <aside class="like-box clearfix">
-                                            <div class="like-el fb-like">
-                                                <iframe
-                                                    src="./What is Duvet &amp; How to Choose a Quality Duvet Cover__files/like.html"
-                                                    style="border:none; overflow:hidden; width:105px; height:21px; background-color:transparent;"></iframe>
-                                            </div>
-                                            <div class="like-el twitter-like twitter-share-button">
-                                                <iframe id="twitter-widget-0" scrolling="no" frameborder="0"
-                                                    allowtransparency="true" allowfullscreen="true"
-                                                    class="twitter-share-button twitter-share-button-rendered twitter-tweet-button"
-                                                    title="X Post Button"
-                                                    src="./What is Duvet &amp; How to Choose a Quality Duvet Cover__files/tweet_button.2f70fb173b9000da126c79afe2098f02.en.html"
-                                                    style="position: static; visibility: visible; width: 65px; height: 20px;"
-                                                    data-url="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/"></iframe>
-                                                <script>window.twttr = (function (d, s, id) {
-                                                        var js, fjs = d.getElementsByTagName(s)[0],
-                                                            t = window.twttr || {};
-                                                        if (d.getElementById(id)) return t;
-                                                        js = d.createElement(s);
-                                                        js.id = id;
-                                                        js.src = "https://platform.twitter.com/widgets.js";
-                                                        fjs.parentNode.insertBefore(js, fjs);
-
-                                                        t._e = [];
-                                                        t.ready = function (f) {
-                                                            t._e.push(f);
-                                                        };
-
-                                                        return t;
-                                                    }(document, "script", "twitter-wjs"));</script>
-                                            </div>
-                                        </aside> -->
                                     </div>
                                 </div>
                                 <!-- Bookmark -->
                                 <aside class="is-hidden rb-remove-bookmark" data-bookmarkid="7492"></aside>
                                 <div class="entry-footer">
                                     <div class="inner">
+                                        <!-- Post Tags -->
                                         <div class="single-post-tag tags">
-                                            <?php 
-                                            // Display tags for the single post
-                                            if (is_single()) { // Ensure we're on a single post page
-                                                $post_tags = get_the_tags();
-                                                if ($post_tags) {
-                                                    echo '<span class="tag-label">Tags:</span>';
-                                                    the_tags('', ', ', ''); // Display the tags with comma separation
-                                                } else {
-                                                    echo '<span class="tag-label">No tags available.</span>';
+                                            <?php
+                                            $post_tags = wp_get_post_terms(get_the_ID(), 'community_tag');
+                                            if (!empty($post_tags)) {
+                                                echo '<span class="tag-label">Tags:</span>';
+                                                foreach ($post_tags as $tag) {
+                                                    echo '<a href="' . get_term_link($tag) . '">' . esc_html($tag->name) . '</a>, ';
                                                 }
+                                            } else {
+                                                echo '<span class="tag-label">No tags available.</span>';
                                             }
                                             ?>
                                         </div>
@@ -280,130 +236,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- <nav class="single-post-box box-nav rb-n20-gutter">
-                                <div class="nav-el nav-left rb-p20-gutter">
-                                    <a
-                                        href="http://localhost/homoper/maximizing-space-functional-and-stylish-home-interior-ideas-for-airbnb-in-2024/">
-                                        <span class="nav-label"><i class="rbi rbi-angle-left"></i><span>Previous
-                                                Article</span></span>
-                                        <span class="nav-inner h4">
-                                            <img width="150" height="150"
-                                                src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
-                                                data-src="http://localhost/homoper/wp-content/uploads/2022/12/home-interior-design-150x150.jpg"
-                                                class="rb-lazyload rb-autosize attachment-thumbnail size-thumbnail wp-post-image"
-                                                alt="Home interior design" decoding="async" loading="lazy"
-                                                sizes="346.625px"> <span class="nav-title p-url">Maximizing
-                                                Space: Functional and Stylish Home Interior Ideas for AirBnB
-                                                in 2024</span>
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="nav-el nav-right rb-p20-gutter">
-                                    <a href="http://localhost/homoper/design-ideas-for-your-gutter-drainage-systems/">
-                                        <span class="nav-label"><span>Next Article</span><i
-                                                class="rbi rbi-angle-right"></i></span>
-                                        <span class="nav-inner h4">
-                                            <img width="150" height="150"
-                                                src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs="
-                                                data-src="http://localhost/homoper/wp-content/uploads/2024/01/gutter-drainage-system-design-150x150.jpg"
-                                                class="rb-lazyload rb-autosize attachment-thumbnail size-thumbnail wp-post-image"
-                                                alt="Gutter drainage system design" decoding="async" loading="lazy"
-                                                sizes="346.625px"> <span class="nav-title p-url">10 Effective Design
-                                                Ideas for Your
-                                                Gutter Drainage Systems</span>
-                                        </span>
-                                    </a>
-                                </div>
-                            </nav> -->
-                            <aside id="rb-user-reviews-7492" class="comment-box-wrap rb-user-reviews">
-                                <div class="comment-box-header clearfix">
-                                    <h4 class="h3"><i class="rbi rbi-star-full"></i>Leave a Review</h4>
-                                </div>
-                                <div id="comments" class="comments-area rb-reviews-area">
-                                    <div class="comment-box-content rb-reviews-form clearfix is-loaded">
-                                        <div id="respond" class="comment-respond">
-                                            <h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow"
-                                                        id="cancel-comment-reply-link"
-                                                        href="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/#respond"
-                                                        style="display:none;">Cancel reply</a></small></h3>
-                                            <form action="http://localhost/homoper/wp-comments-post.php" method="post"
-                                                id="commentform" class="comment-form" novalidate="">
-                                                <p class="logged-in-as">Logged in as Arifur Rahman. <a
-                                                        href="http://localhost/homoper/wp-admin/profile.php">Edit
-                                                        your profile</a>. <a
-                                                        href="http://localhost/homoper/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fhomoper%2Fwhat-is-duvet-and-how-to-choose-a-quality-duvet-cover%2F&amp;_wpnonce=61cffc5150">Log
-                                                        out?</a> <span class="required-field-message">Required fields
-                                                        are
-                                                        marked <span class="required">*</span></span></p>
-                                                <div class="rb-form-rating">
-                                                    <span class="rating-alert is-hidden">Please select a
-                                                        rating</span>
-                                                    <label id="rating-7492">Your rating</label>
-                                                    <div class="rb-review-stars"> <span> <a class="star" data-rating="1"
-                                                                href="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/#"><i
-                                                                    class="rbi rbi-star"></i></a> <a class="star"
-                                                                data-rating="2"
-                                                                href="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/#"><i
-                                                                    class="rbi rbi-star"></i></a> <a class="star"
-                                                                data-rating="3"
-                                                                href="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/#"><i
-                                                                    class="rbi rbi-star"></i></a> <a class="star"
-                                                                data-rating="4"
-                                                                href="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/#"><i
-                                                                    class="rbi rbi-star"></i></a> <a class="star"
-                                                                data-rating="5"
-                                                                href="http://localhost/homoper/what-is-duvet-and-how-to-choose-a-quality-duvet-cover/#"><i
-                                                                    class="rbi rbi-star"></i></a> </span>
-                                                    </div><select name="rbrating" id="rating-7492"
-                                                        class="rb-rating-selection" style="display: none;">
-                                                        <option value="">Rate…</option>
-                                                        <option value="5">Perfect</option>
-                                                        <option value="4">Good</option>
-                                                        <option value="3">Average</option>
-                                                        <option value="2">Not that bad</option>
-                                                        <option value="1">Very poor</option>
-                                                    </select>
-                                                </div>
-                                                <p class="comment-form-comment"><label for="comment">Your
-                                                        review&nbsp;<span class="required">*</span></label><textarea
-                                                        id="comment" name="comment" placeholder="Leave Your Review"
-                                                        cols="45" rows="8" required=""></textarea></p>
-                                                <div class="c4wp_captcha_field" style="margin-bottom: 10px;"
-                                                    data-nonce="f3864ab0ae">
-                                                    <div id="c4wp_captcha_field_1" class="c4wp_captcha_field_div"><input
-                                                            type="hidden" name="g-recaptcha-response"
-                                                            class="c4wp_response" aria-label="do not use"
-                                                            aria-readonly="true" value=""></div>
-                                                </div>
-                                                <p class="form-submit"><input name="submit" type="submit" id="submit"
-                                                        class="submit c4wp-submit" value="Post Review"><input
-                                                        name="submit" type="submit" id="submit" class="submit"
-                                                        value="Post Review" style="display: none;"> <input type="hidden"
-                                                        name="comment_post_ID" value="7492" id="comment_post_ID">
-                                                    <input type="hidden" name="comment_parent" id="comment_parent"
-                                                        value="0">
-                                                </p>
-                                                <p style="display: none;"><input type="hidden"
-                                                        id="akismet_comment_nonce" name="akismet_comment_nonce"
-                                                        value="65a0410491"></p>
-                                                <input type="hidden" id="_wp_unfiltered_html_comment_disabled"
-                                                    name="_wp_unfiltered_html_comment" value="b76aae4f0c">
-                                                <script>
-                                                    (function () { if (window === window.parent) { document.getElementById('_wp_unfiltered_html_comment_disabled').name = '_wp_unfiltered_html_comment'; } })();
-                                                </script>
-                                                <p style="display: none !important;" class="akismet-fields-container"
-                                                    data-prefix="ak_">
-                                                    <label>Δ<textarea name="ak_hp_textarea" cols="45" rows="8"
-                                                            maxlength="100"></textarea></label><input type="hidden"
-                                                        id="ak_js_1" name="ak_js" value="1726761834167">
-                                                    <script>document.getElementById("ak_js_1").setAttribute("value", (new Date()).getTime());</script>
-                                                </p>
-                                            </form>
-                                        </div><!-- #respond -->
-                                    </div>
-                                </div>
-                            </aside>
                         </div>
 
                     </div>
@@ -522,11 +354,11 @@
 
     .breadcrumbs ul li a {
         text-decoration: none;
-        color: #0073aa;
+        color: #555;
     }
 
     .breadcrumbs ul li a:hover {
-        text-decoration: underline;
+        color: #0073aa;
     }
 
     /* Navbar Border Styling */
